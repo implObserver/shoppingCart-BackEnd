@@ -4,9 +4,9 @@
  * Module dependencies.
  */
 
-import app from '../app.js';
 import { createServer } from 'http';
 import createDebugMessages from 'debug';
+import { app } from '../app/app.js';
 
 const debug = createDebugMessages('shoppingCart-backend:server');
 
