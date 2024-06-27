@@ -1,1 +1,1 @@
-export const __dirname = '/home/observer/repos/shoppingCart-BackEnd/shoppingCart-backend';
+export const __dirname = '/home/observer/repos/shoppingCart-BackEnd';
