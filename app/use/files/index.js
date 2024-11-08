@@ -1,5 +1,5 @@
-import { useStaticFileServe } from "./static/useStaticFile.js"
+import { useStaticFileServe } from './static/useStaticFile.js';
 
 export const useFilesMiddleware = () => {
-    useStaticFileServe();
-}
+  useStaticFileServe();
+};

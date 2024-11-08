@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2021",
+    "strict": true, // Включение строгого режима
+    "esModuleInterop": true, // Упрощает импорт модулей CommonJS
+    "skipLibCheck": true, // Пропуск проверки библиотек для ускорения компиляции
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist", // Папка для компилированного кода
+    "rootDir": "./",
+    "moduleResolution": "node"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}

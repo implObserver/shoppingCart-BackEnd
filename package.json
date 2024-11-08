@@ -5,9 +5,14 @@
   "type": "module",
   "scripts": {
     "installDeps": "node scriptDep",
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=shoppingCart-backend:* npm run devstart"
+    "start": "node ./bin/server/server.js",
+    "devstart": "nodemon ./bin/server/server.js",
+    "serverstart": "DEBUG=shoppingCart-backend:* npm run devstart",
+    "build": "webpack",
+    "start:prod": "node dist/bundle.js",
+    "devstart:prod": "nodemon ./dist/bundle.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -15,6 +20,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
+    "eslint-config-eslint": "^11.0.0",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "express-rate-limit": "^7.3.1",
@@ -27,6 +33,18 @@
     "morgan": "~1.9.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/webpack-node-externals": "^3.0.4",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }
