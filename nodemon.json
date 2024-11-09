@@ -1,0 +1,7 @@
+{
+    "watch": [
+        "*.*"
+    ],
+    "ext": "js,mjs,cjs,json,ts",
+    "exec": "node --loader ts-node/esm ./bin/server/server.ts"
+}

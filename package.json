@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "installDeps": "node scriptDep",
-    "start": "node ./bin/server/server.js",
-    "devstart": "nodemon ./bin/server/server.js",
+    "start": "ts-node ./bin/server/server",
+    "devstart": "nodemon",
     "serverstart": "DEBUG=shoppingCart-backend:* npm run devstart",
     "build": "webpack",
     "start:prod": "node dist/bundle.js",
@@ -37,12 +37,20 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
+    "@types/debug": "^4.1.12",
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.0",
+    "@types/luxon": "^3.4.2",
+    "@types/morgan": "^1.9.9",
     "@types/webpack-node-externals": "^3.0.4",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
     "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0"
