@@ -6,13 +6,13 @@ interface Author extends Document {
   family_name: string;
   date_of_birth?: Date;
   date_of_death?: Date;
-  name: string;
+  full_name?: string;
   url: string;
-  date_of_birth_formatted: string;
-  date_of_death_formatted: string;
+  date_of_birth_formatted?: string;
+  date_of_death_formatted?: string;
   lifespan: string;
-  date_of_birth_iso: string;
-  date_of_death_iso: string;
+  date_of_birth_iso?: string;
+  date_of_death_iso?: string;
 }
 
 export const AuthorSchema = new Schema<Author>({
