@@ -36,3 +36,23 @@ export const getUserByUsername = async (username: string): Promise<IUser | null>
         }
     }
 };
+
+export const setVerifyCode = async (userId: string, verifyCode: string): Promise<void> => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { verifyCode }, // Устанавливаем новый код подтверждения
+            { new: true } // Опции для обновления
+        );
+
+        if (!user) {
+            throw new Error('User not found'); // Обрабатываем случай, когда пользователь не найден
+        }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(`Error set: ${error.message}`);
+        } else {
+            throw new Error(`error set verify code: Unknown error`);
+        }
+    }
+}
