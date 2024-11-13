@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
+import { Schema } from "mongoose";
+import { BookInstance } from "./types/book";
 
-const Schema = mongoose.Schema;
-
-export const BookInstanceSchema = new Schema({
-  book: { type: Schema.Types.ObjectId, ref: 'Book', required: true }, // reference to the associated book
+export const BookInstanceSchema = new Schema<BookInstance>({
+  book: { type: Schema.Types.ObjectId, ref: 'Book', required: true },
   imprint: { type: String, required: true },
   status: {
     type: String,

@@ -1,7 +1,5 @@
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 import { IUser } from './types/user';
-
-const Schema = mongoose.Schema;
 
 export const UserSchema = new Schema<IUser>({
   email: { type: String, unique: true, sparse: true },

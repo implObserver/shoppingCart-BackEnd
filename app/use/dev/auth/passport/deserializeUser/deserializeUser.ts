@@ -1,12 +1,11 @@
 import passport from 'passport';
-//import { prismaDB } from '../../../../../../database/prisma/queries/queries';
+import { User } from '../../../../../../mvc/models/user';
 
 export const setDeserializeUser = () => {
   passport.deserializeUser(async (id, done) => {
     try {
-      //const user = await User.findById(id); //for mongoDB
-      //const user = await prismaDB.findUser(id);
-      //done(null, user);
+      const user = await User.findById(id); //for mongoDB
+      done(null, user);
     } catch (err) {
       done(err);
     }

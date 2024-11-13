@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
+import { Schema } from "mongoose";
+import { Genre } from "./types/book";
 
-const Schema = mongoose.Schema;
-
-export const GenreSchema = new Schema({
+export const GenreSchema = new Schema<Genre>({
   name: { type: String, required: true, minLength: 3, maxLength: 100 },
 });

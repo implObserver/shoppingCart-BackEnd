@@ -1,12 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
-
-interface Product extends Document {
-  instance: mongoose.Types.ObjectId;
-  price: number;
-  discount: number;
-  dicountPrice: number;
-  colorPrice: string;
-}
+import { Schema } from 'mongoose';
+import { Product } from './types/product';
 
 export const ProductSchema = new Schema<Product>({
   instance: { type: Schema.Types.ObjectId, ref: 'Instance', required: true },

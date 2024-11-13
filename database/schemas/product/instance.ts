@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
+import { ProductInstance } from './types/product';
 
-const Schema = mongoose.Schema;
-
-export const InstanceSchema = new Schema({
-  instaceOf: { Type: Schema.Types.ObjectId, required: true },
+export const InstanceSchema = new Schema<ProductInstance>({
+  instanceOf: { Type: Schema.Types.ObjectId, required: true },
 });
