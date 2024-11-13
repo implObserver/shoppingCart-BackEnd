@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
-import { Book } from "./types/book";
+import { IBook } from "./types/book";
 
-export const BookSchema = new Schema<Book>({
+export const BookSchema = new Schema<IBook>({
   title: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'Author', required: true },
   summary: { type: String, required: true },

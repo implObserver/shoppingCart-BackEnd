@@ -1,11 +1,11 @@
 import { Document } from "mongoose";
 
-interface Product extends Document {
+interface IProduct extends Document {
     instance: mongoose.Types.ObjectId;
     price: number;
     discount: number;
 }
 
-interface ProductInstance {
+interface IProductInstance extends Document {
     instanceOf: mongoose.Types.ObjectId;
 }

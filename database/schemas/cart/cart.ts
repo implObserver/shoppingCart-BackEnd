@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { Cart } from "./types/cart";
+import { ICart } from "./types/cart";
 
-export const CartSchema = new Schema<Cart>({
+export const CartSchema = new Schema<ICart>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   products: [{ type: Schema.Types.ObjectId, ref: 'Product', required: false }],
 });

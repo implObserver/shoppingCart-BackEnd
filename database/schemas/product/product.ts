@@ -1,20 +1,20 @@
 import { Schema } from 'mongoose';
-import { Product } from './types/product';
+import { IProduct } from './types/product';
 
-export const ProductSchema = new Schema<Product>({
+export const ProductSchema = new Schema<IProduct>({
   instance: { type: Schema.Types.ObjectId, ref: 'Instance', required: true },
   price: { type: Number, min: 0 },
   discount: { type: Number, min: 0, max: 1 },
 });
 
-ProductSchema.virtual('dicountPrice').get(function (this: Product) {
+ProductSchema.virtual('dicountPrice').get(function (this: IProduct) {
   if (this.price && this.discount) {
     return this.price * this.discount;
   }
   return 0;
 });
 
-ProductSchema.virtual('colorPrice').get(function (this: Product) {
+ProductSchema.virtual('colorPrice').get(function (this: IProduct) {
   if (this.price && this.discount) {
     return this.discount === 1
       ? '#000000'
