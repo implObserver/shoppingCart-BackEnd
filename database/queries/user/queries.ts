@@ -1,58 +1,88 @@
 import { User } from "../../../mvc/models/user";
 import { IUser } from "../../schemas/user/types/user";
 
-export const getUserById = async (id: string): Promise<IUser | null> => {
+interface BaseUserOptions {
+    id?: string;
+    email?: string;
+    username?: string;
+}
+
+interface CommonUserOptions {
+    refreshToken?: string;
+    verifyCode?: string;
+}
+
+interface StatusUserOptions {
+    isAdmin?: boolean;
+    isVerified?: boolean;
+    isAuthenticated?: boolean;
+}
+
+interface GetUserOptions extends BaseUserOptions, CommonUserOptions { }
+interface SetStatusOptions extends StatusUserOptions { }
+interface SetUserOptions extends CommonUserOptions { }
+
+const getUser = async (options: GetUserOptions): Promise<IUser | null> => {
     try {
-        return await User.findById(id).exec();
+        const query: any = {};
+        if (options.id !== undefined) query._id = options.id;
+        if (options.email !== undefined) query.email = options.email;
+        if (options.username !== undefined) query.username = options.username;
+        if (options.refreshToken !== undefined) query.refreshToken = options.refreshToken;
+
+        return await User.findOne(query).exec();
     } catch (error: unknown) {
         if (error instanceof Error) {
-            throw new Error(`Error fetching user by ID: ${error.message}`);
+            throw new Error(`Error fetching user: ${error.message}`);
         } else {
-            throw new Error(`Error fetching user by ID: Unknown error`);
+            throw new Error(`Error fetching user: Unknown error`);
         }
     }
 };
 
-export const getUserByEmail = async (email: string): Promise<IUser | null> => {
+const setStatus = async (userId: string, options: SetStatusOptions): Promise<IUser | null> => {
     try {
-        return await User.findOne({ email }).exec();
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            throw new Error(`Error fetching user by email: ${error.message}`);
-        } else {
-            throw new Error(`Error fetching user by email: Unknown error`);
-        }
-    }
-};
+        const query: any = {};
+        if (options.isAdmin !== undefined) query.isAdmin = options.isAdmin;
+        if (options.isAuthenticated !== undefined) query.isAuthenticated = options.isAuthenticated;
+        if (options.isVerified !== undefined) query.isVerified = options.isVerified;
 
-export const getUserByUsername = async (username: string): Promise<IUser | null> => {
-    try {
-        return await User.findOne({ username }).exec();
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            throw new Error(`Error fetching user by username: ${error.message}`);
-        } else {
-            throw new Error(`Error fetching user by username: Unknown error`);
-        }
-    }
-};
-
-export const setVerifyCode = async (userId: string, verifyCode: string): Promise<void> => {
-    try {
-        const user = await User.findByIdAndUpdate(
+        return await User.findByIdAndUpdate(
             userId,
-            { verifyCode }, // Устанавливаем новый код подтверждения
-            { new: true } // Опции для обновления
+            query,
+            { new: true }
         );
-
-        if (!user) {
-            throw new Error('User not found'); // Обрабатываем случай, когда пользователь не найден
-        }
     } catch (error: unknown) {
         if (error instanceof Error) {
-            throw new Error(`Error set: ${error.message}`);
+            throw new Error(`Error fetching user: ${error.message}`);
         } else {
-            throw new Error(`error set verify code: Unknown error`);
+            throw new Error(`Error fetching user: Unknown error`);
         }
     }
+};
+
+const setOptions = async (userId: string, options: SetUserOptions): Promise<IUser | null> => {
+    try {
+        const query: any = {};
+        if (options.refreshToken !== undefined) query.refreshToken = options.refreshToken;
+        if (options.verifyCode !== undefined) query.verifyCode = options.verifyCode;
+
+        return await User.findByIdAndUpdate(
+            userId,
+            query,
+            { new: true }
+        );
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(`Error fetching user: ${error.message}`);
+        } else {
+            throw new Error(`Error fetching user: Unknown error`);
+        }
+    }
+};
+
+export const userQueries = {
+    getUser,
+    setStatus,
+    setOptions,
 }

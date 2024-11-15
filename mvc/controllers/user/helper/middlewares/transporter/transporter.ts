@@ -3,7 +3,7 @@ import nodemailer, { Transporter } from 'nodemailer';
 import crypto from 'crypto';
 import 'dotenv/config';
 import { Request, Response } from 'express';
-import { setVerifyCode } from '../../../../../../database/queries/user/queries';
+import { userQueries } from '../../../../../../database/queries/user/queries';
 
 const transporter: Transporter = nodemailer.createTransport({
   host: 'smtp.yandex.ru',
@@ -23,7 +23,7 @@ const send_email = asyncHandler(async (req: Request, res: Response) => {
   const email = user.email;
   const secretKey = crypto.randomBytes(16).toString('hex');
 
-  await setVerifyCode(id, secretKey);
+  await userQueries.setOptions(id, { verifyCode: secretKey });
   const url = `${process.env.API_URL}/api/confirm-email?refreshToken=${refreshToken}&key=${secretKey}`;
 
   try {
@@ -34,7 +34,7 @@ const send_email = asyncHandler(async (req: Request, res: Response) => {
       html: `Подтвердите свою почту, перейдя по этой <a href="${url}">ссылке</a>`,
     });
   } catch (error) {
-    console.error(error); // Используйте console.error для логирования ошибок
+    console.error(error);
   }
 
   res.status(403).send({
@@ -42,7 +42,6 @@ const send_email = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
-// Экспортируем функции для использования в других модулях
 export const transporterMiddlewares = {
   send_email,
 };

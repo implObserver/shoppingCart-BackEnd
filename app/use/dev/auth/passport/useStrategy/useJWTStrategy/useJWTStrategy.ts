@@ -31,7 +31,6 @@ const options: StrategyOptions = {
   passReqToCallback: true,
 };
 
-//for postgresDB
 const verifyCallbackPg = async (req: Request, payload: JwtPayload, done: VerifiedCallback) => {
   try {
     const refreshToken = req.cookies['refreshToken'];

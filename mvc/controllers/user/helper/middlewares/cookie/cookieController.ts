@@ -21,8 +21,7 @@ const set_cookie = asyncHandler(async (req: Request, res: Response, next: NextFu
   res.cookie('user_id', user.id, {
     sameSite: 'none',
   });
-
-  // Логируем куки
+  
   console.log('Cookies set:', {
     refreshToken: refreshToken,
     accessToken: accessToken,
