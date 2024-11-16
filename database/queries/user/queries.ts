@@ -1,3 +1,4 @@
+import { Profile } from "../../../mvc/models/profile";
 import { User } from "../../../mvc/models/user";
 import { IUser } from "../../schemas/user/types/user";
 
@@ -5,10 +6,11 @@ interface BaseUserOptions {
     id?: string;
     email?: string;
     username?: string;
+    password?: string;
 }
 
 interface CommonUserOptions {
-    refreshToken?: string;
+    refreshToken?: string | null;
     verifyCode?: string;
 }
 
@@ -81,8 +83,39 @@ const setOptions = async (userId: string, options: SetUserOptions): Promise<IUse
     }
 };
 
+const createUser = async (user: BaseUserOptions): Promise<string | void> => {
+    let newUser;
+    try {
+        newUser = await User.create({
+            email: user.email,
+            username: user.username,
+            password: user.password,
+            isAdmin: false,
+        });
+
+        await Profile.create({
+            user: newUser._id,
+            avatar: 'https://blog-api-store.storage.yandexcloud.net/user-avatars/default/default.svg',
+        });
+
+        return newUser._id.toString();
+    } catch (error) {
+        if (newUser) {
+            await User.findByIdAndDelete(newUser._id);
+        }
+        console.error(error);
+    }
+};
+
+const logoutUser = async (userId: string) => {
+    await setStatus(userId, { isAuthenticated: false });
+    await setOptions(userId, { refreshToken: null });
+}
+
 export const userQueries = {
     getUser,
     setStatus,
     setOptions,
+    createUser,
+    logoutUser,
 }
