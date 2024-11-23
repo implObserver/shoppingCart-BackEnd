@@ -3,7 +3,7 @@ import nodemailer, { Transporter } from 'nodemailer';
 import crypto from 'crypto';
 import 'dotenv/config';
 import { Request, Response } from 'express';
-import { userQueries } from '../../../../../../database/queries/user/queries';
+import { userQueries } from '../../../../../../database/queries/user/queries.ts';
 
 const transporter: Transporter = nodemailer.createTransport({
   host: 'smtp.yandex.ru',
@@ -17,7 +17,7 @@ const transporter: Transporter = nodemailer.createTransport({
 
 // Функция для отправки почты
 const send_email = asyncHandler(async (req: Request, res: Response) => {
-  const { user, refreshToken } = res.locals as UserLocals;
+  const { user, refreshToken } = res.locals;
 
   const id = user.id;
   const email = user.email;

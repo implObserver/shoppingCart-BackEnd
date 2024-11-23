@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
-import { __pathToKeyFolder } from '../../passport/useStrategy/useJWTStrategy/keypair/generateKeypair';
+import { __pathToKeyFolder } from '../../passport/useStrategy/useJWTStrategy/keypair/generateKeypair.ts';
 import path from 'path';
 
 const pathToPrivKey = path.join(__pathToKeyFolder, 'id_rsa_priv.pem');

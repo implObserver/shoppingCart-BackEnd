@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler';
-import { getAccessToken, getRefreshToken } from '../../../../../app/use/dev/auth/token/JWT/issueJWT.js';
+import { getAccessToken, getRefreshToken } from '../../../../../app/use/dev/auth/token/JWT/issueJWT.ts';
 import { NextFunction, Request, Response } from 'express';
-import { userQueries } from '../../../../../database/queries/user/queries.js';
-import { IUser } from '../../../../../database/schemas/user/types/user.js';
+import { userQueries } from '../../../../../database/queries/user/queries.ts';
+import { IUser } from '../../../../../database/schemas/user/types/user';
 
 const failureProtected = (req: Request, res: Response) => {
     res.status(401).json({ message: 'unauthorized' });

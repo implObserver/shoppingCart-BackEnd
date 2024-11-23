@@ -1,6 +1,6 @@
-import { Profile } from "../../../mvc/models/profile";
-import { User } from "../../../mvc/models/user";
-import { IUser } from "../../schemas/user/types/user";
+import { Profile } from "../../../mvc/models/profile.ts";
+import { User } from "../../../mvc/models/user.ts";
+import { IUser } from "../../schemas/user/types/user.ts";
 
 interface BaseUserOptions {
     id?: string;

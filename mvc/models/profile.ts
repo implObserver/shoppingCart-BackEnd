@@ -1,5 +1,5 @@
 import mongoose, { Model } from "mongoose";
 import { IProfile } from "../../database/schemas/profile/types/profile";
-import { ProfileSchema } from "../../database/schemas/profile/profile";
+import { ProfileSchema } from "../../database/schemas/profile/profile.ts";
 
 export const Profile: Model<IProfile> = mongoose.model<IProfile>('Profile', ProfileSchema);
