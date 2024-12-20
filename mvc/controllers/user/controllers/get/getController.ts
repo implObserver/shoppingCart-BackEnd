@@ -31,11 +31,11 @@ const user_get = asyncHandler(async (req: Request, res: Response) => {
     const user = res.locals.user;
 
     res.json({
+        status: 200,
         user: {
             id: user.id,
             email: user.email,
             username: user.username,
-            profile: user.profile,
         },
     });
 });
@@ -43,7 +43,7 @@ const user_get = asyncHandler(async (req: Request, res: Response) => {
 const confirm_email = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const refreshToken = req.query.refreshToken as string | undefined;
-        const verifyCode = req.query.verifyCode;
+        const verifyCode = req.query.key;
         const user = await userQueries.getUser({ refreshToken });
         if (!user) {
             res.status(400).send('Пользователь не найден');
@@ -51,8 +51,8 @@ const confirm_email = asyncHandler(async (req: Request, res: Response, next: Nex
             res.status(400).send('Неверная ссылка');
         } else {
             await userQueries.setStatus(user.id, { isVerified: true });
+            next();
         }
-        next();
     } catch {
         res.status(400).send('Что-то пошло не так. Пожалуйста, повторите позже.');
     }

@@ -7,8 +7,10 @@ import { getRefreshToken } from '../../../../../app/use/dev/auth/token/JWT/issue
 import { NextFunction, Request, Response } from 'express';
 import { userQueries } from '../../../../../database/queries/user/queries.ts';
 import { IUser } from '../../../../../database/schemas/user/types/user';
+import { transporterMiddlewares } from '../../helper/middlewares/transporter/transporter.ts';
 
 interface AuthInfo {
+    user: IUser;
     message?: string;
     error?: string;
     status?: number;
@@ -85,15 +87,23 @@ const user_auth_post = asyncHandler(async (req: Request, res: Response, next: Ne
     passport.authenticate('local', (err: Error | null, user: Express.User | false, info: AuthInfo) => {
         if (err) {
             console.error('Authentication error 1:', err);
-            res.status(500).json({ error: 'Internal server error' });
+            return res.status(500).json({ error: 'Internal server error' });
         }
         if (!user) {
-            res.status(info.status || 400).json({ error: info.error || info.message });
+            if (info.message === 'Почтовый ящик не подтвержден') {
+                const cUser = info.user as IUser;
+                res.locals.user = cUser;
+                res.locals.refreshToken = cUser.refreshToken;
+                return next();
+            }
+            console.log(info)
+            return res.status(info.status || 400).json({ error: info.message });
         }
+
         req.logIn(user, (loginErr) => {
             if (loginErr) {
                 console.error('Authentication error 2:', loginErr);
-                res.status(500).json({ error: 'Login failed' });
+                return res.status(500).json({ error: 'Login failed' });
             }
             console.log('Successfully authenticated:');
             next();

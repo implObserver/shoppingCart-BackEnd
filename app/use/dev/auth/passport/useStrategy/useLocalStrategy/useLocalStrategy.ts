@@ -24,6 +24,7 @@ const verifyCallbackPg = async (identifier: string, password: string, done: (err
       console.log('Почтовый ящик не подтвержден');
       return done(null, false, {
         message: 'Почтовый ящик не подтвержден',
+        user,
         status: 403,
       });
     }

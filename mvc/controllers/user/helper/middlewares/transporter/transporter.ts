@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import nodemailer, { Transporter } from 'nodemailer';
 import crypto from 'crypto';
 import 'dotenv/config';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { userQueries } from '../../../../../../database/queries/user/queries.ts';
 
 const transporter: Transporter = nodemailer.createTransport({
@@ -16,10 +16,13 @@ const transporter: Transporter = nodemailer.createTransport({
 });
 
 // Функция для отправки почты
-const send_email = asyncHandler(async (req: Request, res: Response) => {
-  const { user, refreshToken } = res.locals;
+const send_email = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
 
-  const id = user.id;
+  const { user, refreshToken } = res.locals;
+  const id = user._id;
   const email = user.email;
   const secretKey = crypto.randomBytes(16).toString('hex');
 

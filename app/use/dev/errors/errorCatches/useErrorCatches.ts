@@ -1,4 +1,3 @@
-import createError from 'http-errors';
 import { app } from '../../../../app.ts';
 import { Request, Response, NextFunction } from 'express';
 
