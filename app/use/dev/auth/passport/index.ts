@@ -1,8 +1,8 @@
-import { setDeserializeUser } from './deserializeUser/deserializeUser';
-import { setSerializeUser } from './serializeUser/serializeUser';
-import { usePassportSession } from './usePassportSession/usePassportSession';
-import { useJWTStrategy } from './useStrategy/useJWTStrategy/useJWTStrategy';
-import { useLocalStrategy } from './useStrategy/useLocalStrategy/useLocalStrategy';
+import { setDeserializeUser } from './deserializeUser/deserializeUser.ts';
+import { setSerializeUser } from './serializeUser/serializeUser.ts';
+import { usePassportSession } from './usePassportSession/usePassportSession.ts';
+import { useJWTStrategy } from './useStrategy/useJWTStrategy/useJWTStrategy.ts';
+import { useLocalStrategy } from './useStrategy/useLocalStrategy/useLocalStrategy.ts';
 
 export const usePassport = () => {
   usePassportSession();

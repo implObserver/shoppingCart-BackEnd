@@ -15,6 +15,7 @@ interface AuthInfo {
 }
 
 const user_create_post = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    console.log('1')
     await Promise.all([
         body('username')
             .trim()
@@ -32,29 +33,29 @@ const user_create_post = asyncHandler(async (req: Request, res: Response, next: 
             .escape()
             .run(req),
     ]);
-
+    console.log('2')
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(400).json({ error: errors.array()[0].msg });
     }
-
+    console.log('3')
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     const userPg = {
         username: req.body.username,
         email: req.body.email,
         password: hashPassword,
     };
-
     const checkEmail = await userQueries.getUser({ email: userPg.email });
     const checkUsername = await userQueries.getUser({ username: userPg.username });
     if (checkEmail || checkUsername) {
         res.status(403).json({ error: 'Такой пользователь уже существует' });
     }
-
+    console.log('4')
     const id = await userQueries.createUser(userPg);
     if (id) {
         const refreshToken = getRefreshToken(id).token;
         const user = await userQueries.setOptions(id, { refreshToken });
+        console.log('5')
         res.locals.user = user;
         res.locals.refreshToken = refreshToken;
         next();

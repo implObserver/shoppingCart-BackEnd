@@ -2,15 +2,16 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
-import { getUserByEmail, getUserByUsername } from '../../../../../../../database/queries/user/queries';
-import { IUser } from '../../../../../../../database/schemas/user/types/user';
+import { IUser } from '../../../../../../../database/schemas/user/types/user.ts';
+import { userQueries } from '../../../../../../../database/queries/user/queries.ts';
 
 const verifyCallbackPg = async (identifier: string, password: string, done: (error: Error | null, user?: IUser | false, info?: any) => void) => {
   try {
     let user: IUser | null;
     const isEmail = validator.isEmail(identifier);
-    user = isEmail ? await getUserByEmail(identifier) : await getUserByUsername(identifier);
-
+    user = isEmail
+      ? await userQueries.getUser({ email: identifier })
+      : await userQueries.getUser({ username: identifier });
     if (!user) {
       console.log('Incorrect email or username');
       return done(null, false, {

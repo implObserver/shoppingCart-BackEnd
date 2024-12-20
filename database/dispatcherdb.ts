@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
 
-const mongoDB = process.env.MONGODB_URI || 'default_uri';
-
+const mongoDB = process.env.MONGODB_URI2 || 'default_uri';
+console.log(process.env.MONGODB_URI2)
 export const connectLibraryDB = () => {
   mongoose
     .connect(mongoDB)

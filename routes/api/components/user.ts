@@ -6,5 +6,5 @@ export const userRouter = Router();
 userRouter.post(
     '/user/signup',
     userControllers.user_create_post,
-
+    userControllers.send_email
 );
