@@ -1,5 +1,5 @@
-import { Profile } from "../../../mvc/models/profile.ts";
-import { User } from "../../../mvc/models/user.ts";
+import { Profile } from "../../../mvc/models/profile.model.ts";
+import { User } from "../../../mvc/models/user.model.ts";
 import { IUser } from "../../schemas/user/types/user.ts";
 
 interface BaseUserOptions {
@@ -111,6 +111,25 @@ const logoutUser = async (userId: string) => {
     await setStatus(userId, { isAuthenticated: false });
     await setOptions(userId, { refreshToken: null });
 }
+
+const getOptions = async (userId: string, options: SetUserOptions): Promise<IUser | null> => {
+    try {
+        const query: any = {};
+        if (options.refreshToken !== undefined) query.refreshToken = options.refreshToken;
+        if (options.verifyCode !== undefined) query.verifyCode = options.verifyCode;
+
+        return await User.findById(
+            userId,
+            query,
+        );
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(`Error fetching user: ${error.message}`);
+        } else {
+            throw new Error(`Error fetching user: Unknown error`);
+        }
+    }
+};
 
 export const userQueries = {
     getUser,

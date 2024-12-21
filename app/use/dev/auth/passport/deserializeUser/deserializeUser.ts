@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { User } from '../../../../../../mvc/models/user.ts';
+import { User } from '../../../../../../mvc/models/user.model.ts';
 
 export const setDeserializeUser = () => {
   passport.deserializeUser(async (id, done) => {

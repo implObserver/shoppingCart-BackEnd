@@ -1,29 +1,29 @@
 import { Document } from "mongoose";
 
-interface ILifeSpan {
+export interface ILifeSpan {
     born: Date | null;
     died: Date | null;
 }
 
-interface IAuthor extends Document {
+export interface IAuthor extends Document {
     first_name: string;
     family_name: string;
-    lifespan?: LifeSpan;
+    lifespan?: ILifeSpan;
 }
 
-interface IGenre extends Document {
+export interface IGenre extends Document {
     name: string,
 }
 
-interface IBook extends Document {
+export interface IBook extends Document {
     title: string,
-    author: mongoose.Types.ObjectId,
+    author: mongoose.Types.ObjectId | IAuthor,
     summary: string,
     isbn: string,
-    genre: mongoose.Types.ObjectId,
+    genre: mongoose.Types.ObjectId[] | IGenre[],
 }
 
-interface IBookInstance extends Document {
+export interface IBookInstance extends Document {
     book: mongoose.Types.ObjectId,
     imprint: string,
     status: string,
